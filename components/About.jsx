@@ -42,10 +42,10 @@ export default function About() {
         >
           {/* Portrait frame */}
           <div className="relative">
-            <div className="w-full aspect-[4/5] bg-gradient-to-br from-[#1a1e24] to-[#0e1116] border border-gold-400/20 flex items-end justify-center overflow-hidden relative">
+            <div className="w-full aspect-[4/6] bg-gradient-to-br from-[#1a1e24] to-[#0e1116] border border-gold-400/20 flex items-end justify-center overflow-hidden relative">
               {/* Image */}
               <Image
-                src="/chadimage.jpeg"
+                src="/chadimage.png"
                 alt="Chad Michael Bruce"
                 fill
                 className="object-cover object-center"

@@ -66,14 +66,14 @@ export default function Contact() {
     {
       icon: <PhoneOutlinedIcon />,
       label: "Telephone",
-      value: "+353 1 234 5678",
-      link: "tel:+35312345678",
+      value: "email me",
+      link: "",
     },
     {
       icon: <EmailOutlinedIcon />,
       label: "Email",
-      value: "chad@brucelaw.ie",
-      link: "mailto:chad@brucelaw.ie",
+      value: "Chadmichealb22@gmail.com",
+      link: "mailto:Chadmichealb22@gmail.com",
     },
     {
       icon: <LocationOnOutlinedIcon />,
