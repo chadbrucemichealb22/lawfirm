@@ -1,6 +1,10 @@
+"use client";
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import emailjs from "@emailjs/browser";
+
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
@@ -29,14 +33,46 @@ export default function Contact() {
     message: "",
   });
   const [snack, setSnack] = useState(false);
+  const [snackMessage, setSnackMessage] = useState("");
+  const [snackSeverity, setSnackSeverity] = useState("success");
 
   const handleChange = (e) =>
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSnack(true);
-    setForm({ name: "", email: "", phone: "", area: "", message: "" });
+
+    emailjs
+      .send(
+        "service_k3jtl4d",
+        "template_ce7pduw",
+        {
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          area: form.area,
+          message: form.message,
+        },
+        "zLd4GMMwBR3w30WE2"
+      )
+      .then(() => {
+        setSnackMessage("Thank you. Chad will be in touch within 24 hours.");
+        setSnackSeverity("success");
+        setSnack(true);
+        setForm({
+          name: "",
+          email: "",
+          phone: "",
+          area: "",
+          message: "",
+        });
+      })
+      .catch((err) => {
+        console.error("Email failed:", err);
+        setSnackMessage("Something went wrong. Please try again.");
+        setSnackSeverity("error");
+        setSnack(true);
+      });
   };
 
   const inputSx = {
@@ -66,7 +102,7 @@ export default function Contact() {
     {
       icon: <PhoneOutlinedIcon />,
       label: "Telephone",
-      value: "email me",
+      value: "Email me",
       link: "",
     },
     {
@@ -287,17 +323,19 @@ export default function Contact() {
       >
         <Alert
           onClose={() => setSnack(false)}
-          severity="success"
+          severity={snackSeverity}
           sx={{
             bgcolor: "#141820",
-            color: "#c9a84c",
-            border: "1px solid rgba(201,168,76,0.3)",
+            color: snackSeverity === "success" ? "#c9a84c" : "#f44336",
+            border: `1px solid rgba(${snackSeverity === "success" ? "201,168,76" : "244,67,54"}, 0.3)`,
             borderRadius: 0,
             fontFamily: "'Jost', sans-serif",
-            "& .MuiAlert-icon": { color: "#c9a84c" },
+            "& .MuiAlert-icon": { 
+              color: snackSeverity === "success" ? "#c9a84c" : "#f44336" 
+            },
           }}
         >
-          Thank you. Chad will be in touch within 24 hours.
+          {snackMessage}
         </Alert>
       </Snackbar>
     </section>
